@@ -3,3 +3,9 @@ helm repo add apache-airflow https://airflow.apache.org
 helm show values apache-airflow/airflow > airflow/myvalues.yaml
 helm install airflow apache-airflow/airflow -f airflow/myvalues.yaml -n airflow --debug
 kubectl get svc -n airflow
+
+
+
+
+docker build -t igoraugustoms91/spark-operator:v1
+docker push igoraugustoms91/spark-operator:v1

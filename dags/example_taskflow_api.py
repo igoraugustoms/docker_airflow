@@ -1,16 +1,17 @@
 import json
-import pendulum
+
 from airflow.decorators import dag, task
-@dag(
-    schedule=None,
-    start_date=pendulum.datetime(2021, 1, 1, tz="UTC"),
-    catchup=False,
-    tags=['example'],
-)
-def tutorial_taskflow_api():
+from airflow.utils.dates import days_ago
+# These args will get passed on to each operator
+# You can override them on a per-task basis during operator initialization
+default_args = {
+    'owner': 'airflow',
+}
+@dag(default_args=default_args, schedule_interval=None, start_date=days_ago(2), tags=['example'])
+def tutorial_taskflow_api_etl():
     """
     ### TaskFlow API Tutorial Documentation
-    This is a simple data pipeline example which demonstrates the use of
+    This is a simple ETL data pipeline example which demonstrates the use of
     the TaskFlow API using three simple tasks for Extract, Transform, and Load.
     Documentation that goes along with the Airflow TaskFlow API tutorial is
     located
@@ -53,4 +54,4 @@ def tutorial_taskflow_api():
     order_data = extract()
     order_summary = transform(order_data)
     load(order_summary["total_order_value"])
-tutorial_taskflow_api()
+tutorial_etl_dag = tutorial_taskflow_api_etl()
