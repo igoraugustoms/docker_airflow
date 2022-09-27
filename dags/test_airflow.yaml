@@ -1,7 +1,7 @@
 apiVersion: "sparkoperator.k8s.io/v1beta2"
 kind: SparkApplication
 metadata:
-  name: job-pyspark-batch-10
+  name: job-pyspark-batch-11
   namespace: airflow
 spec:
   volumes:

@@ -42,3 +42,9 @@ kubectl describe job-pyspark-batch -n processing
 ### arquivo spark
 Depois de escrever o codigo, subir no bucket aws
 criar os secrets kubectl create secret generic aws-credentials --from-literal=aws_access_key_id=MEUKEYID --from-literal=aws_secret_access_key=MEUSECRETACCESS -n processing
+
+### no airflow
+Mudar senha
+Criar connection do aws e kubernetes
+criar variable com key id aws
+kubectl apply -f airflow/rolebinding_for_airflow.yaml -n airflow

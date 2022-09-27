@@ -243,6 +243,8 @@ env:
     value: 's3://datalake-igti-igor/airflow-logs/'
   - name: AIRFLOW__LOGGING__REMOTE_LOG_CONN_ID
     value: 'my_aws'
+  - name: AIRFLOW__KUBERNETES__DELETE_WORKER_PODS
+    value: 'False'
 # - name: ""
 #   value: ""
 
