@@ -1,5 +1,6 @@
 from pyspark import SparkContext, SparkConf
 from pyspark.sql import SparkSession
+from pyspark.sql.types import StructType,StructField, StringType, IntegerType
 
 # set conf
 conf = (
@@ -24,6 +25,7 @@ if __name__ == "__main__":
 
     spark.sparkContext.setLogLevel("WARN")
 
+    
     df = (
         spark
         .read
