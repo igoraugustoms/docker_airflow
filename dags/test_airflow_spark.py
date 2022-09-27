@@ -41,4 +41,4 @@ with DAG(
         application_name="{{ task_instance.xcom_pull(task_ids='converte_parquet')['metadata']['name'] }}",
         kubernetes_conn_id="kubernetes_default",
     )
-converte_parquet
+converte_parquet >> converte_parquet_monitor
