@@ -1,14 +1,15 @@
 apiVersion: "sparkoperator.k8s.io/v1beta2"
 kind: SparkApplication
 metadata:
-  name: job-pyspark-batch-2
+  name: job-pyspark-batch-7
   namespace: processing
 spec:
   volumes:
     - name: ivy
       emptyDir: {}
   sparkConf:
-    spark.jars.packages: "org.apache.hadoop:hadoop-aws:2.7.3,org.apache.spark:spark-avro_2.12:3.0.1"
+    #extraJavaOptions: -Dcom.amazonaws.services.s3.enableV4=true
+    #spark.jars.packages: "org.apache.hadoop:hadoop-aws:2.7.3,org.apache.spark:spark-avro_2.12:3.0.1"
     spark.driver.extraJavaOptions: "-Divy.cache.dir=/tmp -Divy.home=/tmp"
     spark.kubernetes.allocation.batch.size: "10"
   hadoopConf:
@@ -16,10 +17,13 @@ spec:
   type: Python
   pythonVersion: "3"
   mode: cluster
-  image: "docker.io/neylsoncrepalde/spark-operator:v3.0.0-aws"
+  #image: "docker.io/neylsoncrepalde/spark-operator:v3.0.0-aws"
+  image: "docker.io/neylsoncrepalde/spark-operator:v3.1.1-hadoop3-aws-kafka"
+  #image: "docker.io/igoraugustoms91/spark-operator:v1"
   imagePullPolicy: Always
-  mainApplicationFile: s3://datalake-igti-igor/code/spark-operator-processing-job-batch.py
-  sparkVersion: "3.0.0"
+  mainApplicationFile: s3a://datalake-igti-igor/code/spark-operator-processing-job-batch.py
+  #sparkVersion: "3.0.0"
+  sparkVersion: "3.1.1"
   restartPolicy:
     type: Never
   driver:
@@ -32,9 +36,11 @@ spec:
         key: aws_secret_access_key
     cores: 1
     coreLimit: "1200m"
-    memory: "4g"
+    #memory: "4g"
+    memory: "2g"
     labels:
-      version: 3.0.0
+      #version: "3.0.0"
+      version: 3.1.1
     serviceAccount: spark
     volumeMounts:
       - name: ivy
@@ -47,11 +53,15 @@ spec:
       AWS_SECRET_ACCESS_KEY:
         name: aws-credentials
         key: aws_secret_access_key
-    cores: 3
-    instances: 3
-    memory: "4g"
+    #cores: 3
+    cores: 1
+    #instances: 4
+    instances: 2
+    #memory: "4g"
+    memory: "1g"
     labels:
-      version: 3.0.0
+      #version: "3.0.0"
+      version: 3.1.1
     volumeMounts:
       - name: ivy
         mountPath: /tmp

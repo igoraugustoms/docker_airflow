@@ -14,7 +14,7 @@ eksctl create cluster --name=igor \
 
 kubectl create namespace airflow
 helm repo add apache-airflow https://airflow.apache.org
-helm show values apache-airflow/airflow > airflow/myvalues2.yaml
+helm show values apache-airflow/airflow > airflow/myvalues3.yaml
 mudar executor
 mudar variaveis de env
 mudar fernet key
@@ -22,18 +22,22 @@ mudar defaultUser e CLusterIP para LoadBalancer
 redis para falso
 mudar gitsync
 helm install airflow apache-airflow/airflow -f airflow/myvalues2.yaml -n airflow --debug
-kubectl get svc -n airflow
+kubectl get svc -n airflow2
 
 
 ### spark on k8s
 kubectl create namespace processing
 kubectl create serviceaccount spark  -n processing
 kubectl create clusterrolebinding spark-role-binding --clusterrole=edit --serviceaccount=processing:spark -n processing
-helm repo add spark-operator https://googlecloudplatform.github.io/spark-on-k8s-operator
+helm repo add spark-operator https://googlecloudplatform.github.io/spark-on-k8s-operator ou helm repo update
 helm install spark spark-operator/spark-operator -n processing
 helm ls -n processing
 kubectl get pods -n processing
-
+criar o aws-credentials
+kubectl apply -f spark-batch-operator-k8s-v1beta2.yaml -n processing
+kubectl get pods -n processing --watch
+kubectl get sparkapllication -n processing
+kubectl describe job-pyspark-batch -n processing
 
 ### arquivo spark
 Depois de escrever o codigo, subir no bucket aws
