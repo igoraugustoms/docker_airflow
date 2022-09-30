@@ -1,4 +1,4 @@
-FROM gcr.io/spark-operator/spark-py:v3.0.0
+FROM neylsoncrepalde/spark-operator:v3.1.1-hadoop3-aws-kafka
 
 # using root
 USER root:root
@@ -6,8 +6,10 @@ USER root:root
 # create directory for applications
 RUN mkdir -p /app 
 
-#copy jars files
-COPY ./jars/ /opt/spark/jars
+COPY ./requirements.txt ./
+
+RUN pip install --no-cache-dir --upgrade pip \
+  && pip install --no-cache-dir -r requirements.txt
 
 #set main work directory
 WORKDIR /app
