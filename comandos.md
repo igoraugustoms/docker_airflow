@@ -7,12 +7,15 @@ eksctl create cluster --name=igor \
 --managed \
 --instance-types=m5.large \
 --spot \
---nodes-min=2 --nodes-max=4 \
+--nodes-min=3 --nodes-max=5 \
 --region=us-east-2 \
 --alb-ingress-access \
 --node-private-networking \
 --full-ecr-access \
 --nodegroup-name=ng-igor
+
+
+eksctl scale nodegroup --cluster igor -r us-east-2 --nodes=5 --nodes-min=3 --nodes-max=6 ng-igor
 
 ### airflow
 
@@ -41,10 +44,12 @@ criar o aws-credentials
 kubectl apply -f spark-batch-operator-k8s-v1beta2.yaml -n processing
 kubectl get pods -n processing --watch
 kubectl get sparkapplication -n processing
-kubectl describe sparkapplication job-pyspark-batch-7-driver -n processing
+kubectl describe sparkapplication ref-tracks-features -n processing
+kubectl describe id_do_pod
 
 
 kubectl apply -f daily-job-raw.yaml -n processing
+kubectl apply -f historical-job-raw.yaml -n processing
 
 ### arquivo spark
 Depois de escrever o codigo, subir no bucket aws

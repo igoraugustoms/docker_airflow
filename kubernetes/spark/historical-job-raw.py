@@ -78,13 +78,14 @@ def get_archive_data(sp, client):
                 track_url=track['url']
                 date_ranking=track['added_at']
                 track_information=sp.track(track_url)
-                track_information['Position']=position
-                client.put_object(Body=json.dumps(track_information), Bucket='datalake-igti-igor', Key='spotify/raw/tracks/'+date_ranking[0:10]+'/musica'+str(position)+'.json')
+                track_information['position']=position
+                track_information['date_ranking']=date_ranking[0:10]
+                client.put_object(Body=json.dumps(track_information), Bucket='datalake-igti-igor', Key='spotify/raw/tracks/musica'+date_ranking[0:10]+str(position)+'.json')
                 track_features=sp.audio_features(track_url)
-                client.put_object(Body=json.dumps(track_features[0]), Bucket='datalake-igti-igor', Key='spotify/raw/tracks_features/'+date_ranking[0:10]+'/feature'+str(position)+'.json')
+                client.put_object(Body=json.dumps(track_features[0]), Bucket='datalake-igti-igor', Key='spotify/raw/tracks_features/'+track_features[0]['id']+'.json')
                 for artist in track_information['artists']:
                     artist_informartion=sp.artist(artist['id'])
-                    client.put_object(Body=json.dumps(artist_informartion), Bucket='datalake-igti-igor', Key='spotify/raw/artists/'+date_ranking[0:10]+'/'+artist_informartion['id']+'_____'+str(position)+'.json')    
+                    client.put_object(Body=json.dumps(artist_informartion), Bucket='datalake-igti-igor', Key='spotify/raw/artists/'+artist_informartion['id']+'.json')    
                 position+=1
         print('Done from '+date[0]+' until '+date[1])
 
