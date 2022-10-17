@@ -33,7 +33,7 @@ def main():
 
 def define_schema():
   schema="""
-    accousticness FLOAT,
+    acousticness FLOAT,
     analysis_url STRING,
     danceability FLOAT,
     duration_ms INT,
