@@ -46,6 +46,7 @@ kubectl get pods -n processing --watch
 kubectl get sparkapplication -n processing
 kubectl describe sparkapplication ref-tracks-features -n processing
 kubectl describe id_do_pod
+kubectl logs exp-f-artist-driver -n processing
 
 
 kubectl apply -f daily-job-raw.yaml -n processing
@@ -53,9 +54,9 @@ kubectl apply -f historical-job-raw.yaml -n processing
 
 ### arquivo spark
 Depois de escrever o codigo, subir no bucket aws
-criar os secrets kubectl create secret generic aws-credentials --from-literal=aws_access_key_id=MEUKEYID --from-literal=aws_secret_access_key=MEUSECRETACCESS -n processing
+criar os secrets kubectl create secret generic aws-credentials --from-literal=aws_access_key_id=XXXXX --from-literal=aws_secret_access_key=XXXXXXXXX -n processing
 
-kubectl create secret generic spotipy-credentials --from-literal=client_id_spotipy=MEUKEYID --from-literal=client_secret_spotipy=MEUSECRETACCESS -n processing
+kubectl create secret generic spotipy-credentials --from-literal=client_id_spotipy=XXXXXXXXXX --from-literal=client_secret_spotipy=xxxxxxxxxxxxx -n processing
 
 ### no airflow
 Mudar senha
